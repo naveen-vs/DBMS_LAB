@@ -1,0 +1,43 @@
+create table product(product_id int,product_name varchar(20),price int);
+insert into product values(&product_id,'&product_name',&price);
+
+create or replace procedure incre(p number) is
+ex exception;
+begin
+update product set price=price+100 where product_id=p;
+if sql%notfound then
+raise ex;
+end if;
+exception
+when ex then
+dbms_output.put_line('product id invalid');
+end;
+/
+
+create or replace procedure display is
+cursor c is select * from product;
+begin
+for i in c
+loop
+dbms_output.put_line(i.product_id||' '||i.product_name||' '||i.price);
+end loop;
+end;
+/
+
+declare
+p number;
+ch number;
+begin
+p:=&p;
+ch:=&ch;
+if ch=1
+then
+incre(p);
+elsif ch=2
+then
+display();
+else
+dbms_output.put_line('choice invalid');
+end if;
+end;
+/

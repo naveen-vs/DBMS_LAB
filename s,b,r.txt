@@ -1,0 +1,69 @@
+ insert into sailors values(&SID,'&SNAME',&RATING,&AGE);
+
+ insert into boats values(&BID,'&BNAME','&COLOR');
+
+insert into reserves values(&SID,&BID,'&DAY');
+
+**DISPLAY THE DETAILS OF SAILOR WITH SID 31  ??????? 
+
+
+
+**Display only name and age od the sailor
+
+select (name,age) from sailor
+
+delete from tablename where feildname=value
+
+delete from sailors where sid=64
+
+
+
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+FIND THE NAMES OF SAILORS WHOSE AGE IS GREATER THAN 25
+
+command - select SNAME,AGE from sailors where AGE>25;
+
+
+???????? Find the names of sailors whose name endswith letter 'o' 
+ans - select SNAME from sailors where SNAME like'%o';
+
+???????? Find the rating of sailors whose age is greater than 35
+ans-select SNAME,RATING from sailors where AGE>35;
+
+???????? Display the details of sailors withe their rating increased by two points
+ans- select SNAME,RATING+2 from sailors;
+
+??????? Find sids of sailors who have reserved a red boat
+
+??????? Find the color of boats reserved by lubber
+
+??????? Find the name sof sailors whi have reserved atleast one boat
+
+
+select * from sailors,boats
+
+
+select * from sailors,reserves where sailors.sid=reserves.sid
+
+
+?????????FInd the names of sailors who have reserved boat 103 
+
+select * from sailors,reserves,boats where sailors.sid=reserves.sid and reserves.bid=boats.bid;
+
+
+
+
+select distinct SNAME from sailors,reserves,boats where sailors.sid=reserves.sid and reserves.bid=boats.bid;
+
+select SNAME from sailors,reserves,boats where sailors.sid=reserves.sid and reserves.bid=boats.bid=103
+
+
