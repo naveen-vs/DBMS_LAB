@@ -1,0 +1,107 @@
+create table professor(pid integer,pname varchar(20),salary integer);
+
+CREATE OR REPLACE TRIGGER minsalary BEFORE
+INSERT ON professor
+
+FOR EACH ROW
+
+BEGIN
+
+IF (:new.salary < 60000)
+
+THEN RAISE_APPLICATION_ERROR
+(-20004,
+'Violation of Minimum
+Professor Salary');
+
+END IF;
+
+END;
+/
+
+insert into professor values(&pid,'&pname',&salary);
+
+
+????? Write a trigger to restrict deletion oparation on professor table
+
+
+CREATE OR REPLACE TRIGGER del BEFORE
+DELETE ON professor
+
+FOR EACH ROW
+
+BEGIN
+
+RAISE_APPLICATION_ERROR
+(-20004,
+'cannot delete table values');
+
+END;
+/
+
+delete from professor where pid=12;
+
+??????????????? Write a trigger to manage deleted records from student tables
+
+
+create table students(id integer,name varchar(20),gender varchar(6), primary key(id));
+
+create table studentsbacklog as select * from students;
+
+insert into students values(&id,'&name','&gender');
+
+select * from students;
+
+
+create or replace trigger manage after delete on students
+for each row
+begin
+insert into studentsbacklog values(:old.id,:old.name,:old.gender);
+end;
+/
+
+delete from students where id=4;
+delete from students where id=6;
+
+select * from students;
+select * from studentsbacklog;
+
+????????????????????????????? create a trigger to maintain gold price history
+
+create table gold(price integer,datee varchar(20));
+
+create table goldhistory as select * from gold;
+
+
+create or replace trigger history after update on gold
+for each row
+begin
+insert into goldhistory values(:old.price,:old.datee);
+end;
+/
+
+insert into gold values(&price,'&datee');
+
+update gold set price=&price,datee='&datee';
+
+select * from gold;
+
+
+????????????????? Write a trigger to manage male and female count of students 
+
+create table gender_count(mcount integer,fcount integer);
+insert into gender_count values(&mcount,&fcount);
+
+create or replace trigger num after insert on students
+for each row
+begin
+if(:new.gender like 'male')
+then
+update gender_count set mcount=mcount+1;
+else
+update gender_count set fcount=fcount+1;
+end if;
+end;
+/
+
+select * from gender_count;
